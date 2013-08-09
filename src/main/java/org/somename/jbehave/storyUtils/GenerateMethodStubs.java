@@ -12,7 +12,8 @@ import java.util.List;
 import static java.lang.System.exit;
 
 @SuppressWarnings("serial")
-public class GenerateMethodStubs extends JPanel {
+public class GenerateMethodStubs extends JPanel
+{
 
     public static void main(String[] args)
     {
@@ -58,7 +59,8 @@ public class GenerateMethodStubs extends JPanel {
             Path storyPath = new File(storyFilePath).toPath();
             return Files.readAllLines(storyPath, Charset.defaultCharset());
 
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             throw new RuntimeException("Couldn't read from source file: ", e);
         }
     }
@@ -68,7 +70,8 @@ public class GenerateMethodStubs extends JPanel {
      * this method should be invoked from the
      * event dispatch thread.
      */
-    private static void createAndShowGUI() {
+    private static void createAndShowGUI()
+    {
         //Create and set up the window.
         JFrame frame = new JFrame("FileChooserDemo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,7 +84,8 @@ public class GenerateMethodStubs extends JPanel {
         frame.setVisible(true);
     }
 
-    public GenerateMethodStubs() {
+    public GenerateMethodStubs()
+    {
         super(new BorderLayout());
 
         JFileChooser fc = new JFileChooser();

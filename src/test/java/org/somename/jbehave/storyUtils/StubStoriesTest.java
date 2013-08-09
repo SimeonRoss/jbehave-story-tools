@@ -13,7 +13,8 @@ import static org.fest.assertions.Assertions.assertThat;
  *         Date: 9/08/13
  *         Time: 11:54 AM
  */
-public class StubStoriesTest {
+public class StubStoriesTest
+{
 
     private StubStories stubber;
 
