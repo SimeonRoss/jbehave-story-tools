@@ -15,7 +15,6 @@ import static org.fest.assertions.Assertions.assertThat;
  */
 public class StubStoriesTest
 {
-
     private StubStories stubber;
 
     @Before

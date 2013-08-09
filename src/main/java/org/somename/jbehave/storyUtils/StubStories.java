@@ -2,6 +2,11 @@ package org.somename.jbehave.storyUtils;
 
 import org.apache.commons.lang3.text.WordUtils;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -9,7 +14,7 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StubStories
+public class StubStories extends AbstractGuiOrCommandline
 {
 	private static final String GIVEN = "given";
 	private static final String WHEN = "when";
@@ -17,7 +22,28 @@ public class StubStories
 	private static final String AND = "and";
 
     private static final Pattern PARAMETER_PATTERN = Pattern.compile("(<.*?>)");
-	
+
+    public static void main(String[] args)
+    {
+        StubStories stubStories = new StubStories();
+        stubStories.start(args);
+    }
+
+    @Override
+    protected void showCommandLineArgsError()
+    {
+        System.out.println("Invalid command line arguments.");
+        System.out.println("To specify the story file to process using the graphical interface please don't specify any arguments.");
+        System.out.println("To specify the file to process from the command line just specify the complete file path as the only argument.");
+    }
+
+    @Override
+    protected void performAction(String fileNameOrPath)
+    {
+        List<String> stubs = stub(readFile(fileNameOrPath));
+        logOutStories(stubs);
+    }
+
     public List<String> stub(List<String> storyLines)
     {
         Set<String> usedStoryTags = new TreeSet<String>();
@@ -93,5 +119,27 @@ public class StubStories
     {
         String methodName = WordUtils.capitalize(restOfMethodName.replaceAll("[^A-Za-z0-9 ]", "")).replaceAll(" ", "");
         return methodTag + methodName;
+    }
+
+    private void logOutStories(List<String> stubs)
+    {
+        for (String stub : stubs)
+        {
+            System.out.println(stub);
+            System.out.println();
+        }
+    }
+
+    private List<String> readFile(String storyFilePath)
+    {
+        try
+        {
+            Path storyPath = new File(storyFilePath).toPath();
+            return Files.readAllLines(storyPath, Charset.defaultCharset());
+
+        } catch (IOException e)
+        {
+            throw new RuntimeException("Couldn't read from source file: ", e);
+        }
     }
 }
